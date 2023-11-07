@@ -4,11 +4,17 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.CvSink;
+import edu.wpi.first.cscore.CvSource;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -20,6 +26,8 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import frc.robot.RobotContainer;
+ 
  
 
 
@@ -31,20 +39,24 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
  * project.
  */
 public class Robot extends TimedRobot {
+   
   private Command m_autonomousCommand;
+  /* 
   private final WPI_TalonSRX frontLeftMotor = new WPI_TalonSRX(01);
   private final WPI_TalonSRX frontRightMotor = new WPI_TalonSRX(02);
   private final WPI_TalonSRX backLeftMotor = new WPI_TalonSRX(03);
   private final WPI_TalonSRX backRightMotor = new WPI_TalonSRX(04); 
-  GenericHID controller = new GenericHID(0);
+  public static GenericHID controller = new GenericHID(0);
 
   
   
-  MecanumDrive robotDrive = new MecanumDrive(frontLeftMotor,backLeftMotor,frontRightMotor,backRightMotor); 
+  MecanumDrive robotDrive = new MecanumDrive(frontLeftMotor,backLeftMotor,frontRightMotor,backRightMotor);
+  */ 
   private final Timer timer = new Timer();
   
 
   private RobotContainer m_robotContainer;
+  Thread visionThread;
 
 
   /**
@@ -56,11 +68,9 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    frontRightMotor.setInverted(true);
-    backRightMotor.setInverted(true);
-
     
-
+    //frontRightMotor.setInverted(true);
+    //backRightMotor.setInverted(true);
   }
   /**
    * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics
@@ -75,6 +85,7 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
+
     CommandScheduler.getInstance().run();
   }
 
@@ -98,11 +109,11 @@ public class Robot extends TimedRobot {
       System.out.println(timer.get());
       //robotDrive.getDescription();
       //frontLeftMotor.set(ControlMode.PercentOutput,0.5);
-      robotDrive.driveCartesian(0.7, 0.7, 0);
+      //robotDrive.driveCartesian(0.7, 0.7, 0);
       
     }
     else if(timer.get() < 4){
-      robotDrive.stopMotor();
+      //robotDrive.stopMotor();
     }
     else{
       timer.reset();
@@ -123,8 +134,10 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    robotDrive.driveCartesian(controller.getRawAxis(0), controller.getRawAxis(3), controller.getRawAxis(1));
-    
+    //robotDrive.driveCartesian(controller.getRawAxis(0), controller.getRawAxis(3), controller.getRawAxis(1));
+    //CommandScheduler.getInstance().run();
+    CommandScheduler.getInstance().run();
+
   }
 
   @Override
@@ -140,7 +153,7 @@ public class Robot extends TimedRobot {
   /** This function is called once when the robot is first started up. */
   @Override
   public void simulationInit() {}
-
+  
   /** This function is called periodically whilst in simulation. */
   @Override
   public void simulationPeriodic() {}
