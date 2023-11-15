@@ -41,6 +41,8 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
+
+    double sensitivity = (controller.getRawAxis(6) + 1) / 2.0;
     driveSubsystem.setDefaultCommand(new DriveCommand(driveSubsystem, () -> controller.getRawAxis(0), () -> controller.getRawAxis(3) , () -> controller.getRawAxis(1)));
     configureBindings();
   }
