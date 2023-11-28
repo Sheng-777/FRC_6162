@@ -20,7 +20,7 @@ public class DriveSubsystem extends SubsystemBase{
 
     // drive commands
     public void drive(double x_speed, double y_speed, double z_rotation, double sensitivity){
-        
+        System.out.println("dsfadfad");
         robotDrive.driveCartesian(x_speed * sensitivity, y_speed * sensitivity, z_rotation * sensitivity);
     }
 }
