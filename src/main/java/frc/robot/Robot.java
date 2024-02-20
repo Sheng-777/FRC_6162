@@ -16,12 +16,15 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.PWMTalonSRX;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 
 import org.opencv.core.Mat;
@@ -32,6 +35,9 @@ import org.opencv.imgproc.Imgproc;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import frc.robot.RobotContainer;
  
  
@@ -55,9 +61,16 @@ public class Robot extends TimedRobot {
   public static GenericHID controller = new GenericHID(0);
 
   
-  
   MecanumDrive robotDrive = new MecanumDrive(frontLeftMotor,backLeftMotor,frontRightMotor,backRightMotor);
   */ 
+
+  //private final CANSparkMax topShoot = new CANSparkMax(5,MotorType.kBrushed);
+  //private final CANSparkMax botShoot = new CANSparkMax(6,MotorType.kBrushed);
+
+  private Ultrasonic rangeFinder = new Ultrasonic(1, 0);
+
+  
+
   private final Timer timer = new Timer();
   
 
@@ -142,25 +155,16 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    Shuffleboard.getTab("Sensors").add(rangeFinder);
+    rangeFinder.setEnabled(true);
     timer.restart();
   }
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    if (timer.get() < 2.0){
-      System.out.println(timer.get());
-      //robotDrive.getDescription();
-      //frontLeftMotor.set(ControlMode.PercentOutput,0.5);
-      //robotDrive.driveCartesian(0.7, 0.7, 0);
-      
-    }
-    else if(timer.get() < 4){
-      //robotDrive.stopMotor();
-    }
-    else{
-      timer.reset();
-    }
+    //System.out.println(rangeFinder.getRangeMM());
+    //CommandScheduler.getInstance().run();
   }
 
   @Override

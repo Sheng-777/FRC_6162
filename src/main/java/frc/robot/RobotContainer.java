@@ -9,9 +9,11 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.ShootCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakerSubSystem;
+import frc.robot.subsystems.ShootSubSystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -28,6 +30,7 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   //private final IntakerSubSystem intakerSubSystem = new IntakerSubSystem();
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
+  private final ShootSubSystem shootSubSystem = new ShootSubSystem();
 
   private final GenericHID controller = new GenericHID(0);
 
@@ -44,7 +47,9 @@ public class RobotContainer {
 
   
     driveSubsystem.setDefaultCommand(new DriveCommand(driveSubsystem, () -> controller.getRawAxis(0), () -> controller.getRawAxis(3) , () -> controller.getRawAxis(1),() -> controller.getRawAxis(6)));
+    shootSubSystem.setDefaultCommand(new ShootCommand(shootSubSystem, () ->  controller.getRawAxis(6)));
     configureBindings();
+
   }
 
   /**
