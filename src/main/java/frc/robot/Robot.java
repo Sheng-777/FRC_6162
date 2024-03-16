@@ -8,8 +8,10 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.CvSink;
 import edu.wpi.first.cscore.CvSource;
 import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -39,6 +41,8 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.RobotContainer;
+import frc.robot.commands.DriveCommand;
+import frc.robot.subsystems.IntakerSubSystem;
  
  
 
@@ -67,12 +71,14 @@ public class Robot extends TimedRobot {
   //private final CANSparkMax topShoot = new CANSparkMax(5,MotorType.kBrushed);
   //private final CANSparkMax botShoot = new CANSparkMax(6,MotorType.kBrushed);
 
-  private Ultrasonic rangeFinder = new Ultrasonic(1, 0);
 
+  
   
 
   private final Timer timer = new Timer();
-  
+  public final static Timer autoTimer = new Timer();
+  public AnalogInput ultrasonicSensorOne = new AnalogInput(3);
+  public double voltageScaleFactor = 1;
 
   private RobotContainer m_robotContainer;
   Thread m_visionThread;
@@ -87,7 +93,9 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    m_visionThread =
+    RobotContainer.driveSubsystem.drive(0, 0, 0, 1);
+    
+    /*m_visionThread =
         new Thread(
             () -> {
               // Get the UsbCamera from CameraServer
@@ -124,7 +132,7 @@ public class Robot extends TimedRobot {
             });
     m_visionThread.setDaemon(true);
     m_visionThread.start();
-    
+    */
     //frontRightMotor.setInverted(true);
     //backRightMotor.setInverted(true);
   }
@@ -141,7 +149,7 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
-
+    //voltageScaleFactor = 5/RobotController.getVoltage5V();
     CommandScheduler.getInstance().run();
   }
 
@@ -155,16 +163,19 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    Shuffleboard.getTab("Sensors").add(rangeFinder);
-    rangeFinder.setEnabled(true);
+
     timer.restart();
+    autoTimer.restart();
+    System.out.println("HIIIIi");
   }
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    //System.out.println(rangeFinder.getRangeMM());
-    //CommandScheduler.getInstance().run();
+    while (autoTimer.get() < 20){
+      RobotContainer.autoSpawnMid();
+    }
+    autoTimer.reset();
   }
 
   @Override
@@ -204,4 +215,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically whilst in simulation. */
   @Override
   public void simulationPeriodic() {}
+  
 }
+
+  
