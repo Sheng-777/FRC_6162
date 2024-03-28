@@ -173,9 +173,9 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     while (autoTimer.get() < 20){
-      RobotContainer.autoSpawnMid();
+      RobotContainer.autoSpawnLeft();
     }
-    autoTimer.reset();
+    autoTimer.restart();
   }
 
   @Override

@@ -42,54 +42,54 @@ public class RobotContainer {
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
       
-      public static void autoSpawnLeft(){
-        if (Robot.autoTimer.get() < 1.2){
-          System.out.println("GOING STRAIGHT");
-          driveSubsystem.drive(0.5, 0, 0, 1);
-        }
-        else if (Robot.autoTimer.get() < 1.7){
-          driveSubsystem.drive(0, 0, 0, 1);
-
-        }
-        else if (Robot.autoTimer.get() < 2.55){
-          System.out.println("GOING STRAIGHT");
-          driveSubsystem.drive(-0.5, 0, 0, 1);
-        }
-        else if (Robot.autoTimer.get() < 3.4){
-          driveSubsystem.drive(0, 0, 0, 1);
-
-        }
-
-        else if (Robot.autoTimer.get() < 4.25){
-          System.out.println("TURNING");
-          driveSubsystem.drive(0, 0, 0.5, 1);
-        }
-        else if (Robot.autoTimer.get() < 4.5){
-          driveSubsystem.drive(0, 0, 0, 1);
-
-        }
-
-        else if (Robot.autoTimer.get() < 4.75){
-          System.out.println("GOING STRAIGHT");
-          driveSubsystem.drive(0.5, 0, 0, 1);
-        }
-
-        else if (Robot.autoTimer.get()<5.5){
-          System.out.println("SHOOTING");
-          driveSubsystem.drive(0, 0, 0, 1);
-
-          shootSubSystem.shoot(-1, 0);
-        }
-
-        //Robot.autoTimer.reset();
-      }
-
       public static void autoSpawnMid(){
         double restTime = 0.55;
         double initialTime = 0.1;
         double spinTime = 0.23;
-        double backwardTime = 1.9;
-        double forwardTime = 1.8;
+        double backwardTime = 2.3;
+        double forwardTime = 1.62;
+        double shootTime = 0.5;
+
+        if (Robot.autoTimer.get() < initialTime){
+          shootSubSystem.shoot(0, 0);
+
+      }
+      else if (Robot.autoTimer.get() < initialTime + spinTime){
+        driveSubsystem.drive(0, 0, 0, 1);
+      }
+      else if (Robot.autoTimer.get() < initialTime + spinTime + restTime){
+        driveSubsystem.drive(0, 0, 0, 0);
+      }
+
+      else if (Robot.autoTimer.get() < initialTime + spinTime + restTime + backwardTime){
+        System.out.println("GOING STRAIGHT");
+        driveSubsystem.drive(-0.35, 0, 0, 1);
+      }
+
+      else if (Robot.autoTimer.get() < initialTime + spinTime + restTime + backwardTime + restTime){
+        driveSubsystem.drive(0, 0, 0, 1);
+
+      }
+
+      else if (Robot.autoTimer.get() < initialTime + spinTime + restTime + backwardTime + restTime + forwardTime){
+        System.out.println("GOING STRAIGHT");
+        driveSubsystem.drive(0.35, 0, 0, 1);
+      }
+      else if (Robot.autoTimer.get() < initialTime + spinTime + restTime + backwardTime + restTime + forwardTime + restTime){
+        driveSubsystem.drive(0, 0, 0, 1);
+      }
+      else if (Robot.autoTimer.get()< initialTime + spinTime + restTime + backwardTime + restTime + forwardTime + restTime + shootTime){
+        System.out.println("SHOOTING");
+        shootSubSystem.shoot(-1, 0);
+      }
+      }
+
+      public static void autoSpawnRight(){
+        double restTime = 0.55;
+        double initialTime = 0.1;
+        double spinTime = 0.23;
+        double backwardTime = 2.3;
+        double forwardTime = 1.6;
         double shootTime = 0.5;
         
         if (Robot.autoTimer.get() < initialTime){
@@ -97,7 +97,7 @@ public class RobotContainer {
 
         }
         else if (Robot.autoTimer.get() < initialTime + spinTime){
-          driveSubsystem.drive(0, 0, 0.5, 1);
+          driveSubsystem.drive(0, 0, -0.5, 1);
         }
         else if (Robot.autoTimer.get() < initialTime + spinTime + restTime){
           driveSubsystem.drive(0, 0, 0, 0);
@@ -128,32 +128,54 @@ public class RobotContainer {
        // Robot.autoTimer.reset();
       }
 
-      public static void autoSpawnRight(){
-        if (Robot.autoTimer.get() < 0.5){
-          System.out.println("GOING STRAIGHT");
-          driveSubsystem.drive(-0.5, 0, 0, 1);
+      public static void autoSpawnLeft(){
+        double restTime = 0.55;
+        double initialTime = 0.1;
+        double spinTime = 0.29;
+        double backwardTime = 2.3;
+        double forwardTime = 1.4;
+        double shootTime = 0.5;
+        
+        if (Robot.autoTimer.get() < initialTime){
+            shootSubSystem.shoot(0, 0);
+
         }
-        else if (Robot.autoTimer.get() < 1){
-          System.out.println("GOING STRAIGHT");
-          driveSubsystem.drive(0.5, 0, 0, 1);
+        else if (Robot.autoTimer.get() < initialTime + spinTime){
+          driveSubsystem.drive(0, 0, 0, 1);
+        }
+        else if (Robot.autoTimer.get() < initialTime + spinTime + restTime){
+          driveSubsystem.drive(0, 0, 0, 0);
         }
 
-        else if (Robot.autoTimer.get() < 1.5){
-          System.out.println("TURNING");
-          driveSubsystem.drive(0, 0, -0.5, 1);
-        }
-
-        else if (Robot.autoTimer.get() < 3){
+        else if (Robot.autoTimer.get() < initialTime + spinTime + restTime + backwardTime){
           System.out.println("GOING STRAIGHT");
-          driveSubsystem.drive(0.5, 0, 0, 1);
+          driveSubsystem.drive(-0.35, 0, 0, 1);
         }
 
-        else if (Robot.autoTimer.get()<4){
+        else if (Robot.autoTimer.get() < initialTime + spinTime + restTime + backwardTime + restTime){
+          driveSubsystem.drive(0, 0, 0, 1);
+
+        }
+
+        else if (Robot.autoTimer.get() < initialTime + spinTime + restTime + backwardTime + restTime + forwardTime){
+          System.out.println("GOING FORWARD");
+          driveSubsystem.drive(0.35, 0, 0, 1);
+        }
+        else if (Robot.autoTimer.get() < initialTime + spinTime + restTime + backwardTime + restTime + forwardTime + restTime){
+          driveSubsystem.drive(0, 0, 0, 1);
+        }
+
+        else if (Robot.autoTimer.get() < initialTime + spinTime + restTime + backwardTime + restTime + forwardTime + restTime + spinTime){
+          driveSubsystem.drive(0, 0, 0.5, 1);
+        }
+        else if (Robot.autoTimer.get() < initialTime + spinTime + restTime + backwardTime + restTime + forwardTime + restTime + spinTime + restTime){
+          driveSubsystem.drive(0, 0, 0, 1);
+        }
+        else if (Robot.autoTimer.get()< initialTime + spinTime + restTime + backwardTime + restTime + forwardTime + restTime + spinTime + restTime + shootTime){
           System.out.println("SHOOTING");
-          shootSubSystem.shoot(1, 0);
+          shootSubSystem.shoot(-1, 0);
         }
 
-        //Robot.autoTimer.reset();
       }
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -161,9 +183,9 @@ public class RobotContainer {
     // Configure the trigger bindings
 
   
-    driveSubsystem.setDefaultCommand(new DriveCommand(driveSubsystem, () -> controller.getRawAxis(0), () -> controller.getRawAxis(3) , () -> controller.getRawAxis(1),() -> controller.getRawAxis(6)));
+    driveSubsystem.setDefaultCommand(new DriveCommand(driveSubsystem, () -> controller.getRawAxis(0), () -> controller.getRawAxis(3) , () -> controller.getRawAxis(1),() -> 1.0));
     shootSubSystem.setDefaultCommand(new ShootCommand(shootSubSystem, () ->  controller.getRawAxis(5), () -> controller.getRawAxis(4)));
-    intakerSubSystem.setDefaultCommand(new IntakeCommand(intakerSubSystem, () -> controller.getRawButton(1)));
+    intakerSubSystem.setDefaultCommand(new IntakeCommand(intakerSubSystem, () -> controller.getRawAxis(6)));
     configureBindings();
 
   }

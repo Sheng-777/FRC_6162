@@ -20,7 +20,7 @@ public class IntakerSubSystem extends SubsystemBase{
 
     @Override
     public void periodic(){
-        // called once per scheduler run
+        // called once per scheduler run              
     }
 
     @Override
@@ -28,10 +28,14 @@ public class IntakerSubSystem extends SubsystemBase{
         // clled once in per scheduler in simulation
     }
 
-    public void start(boolean intakeActivate){
-        if (intakeActivate){
-            topIntakeMotor.set(1);
-            bottomIntakeMotor.set(1);
+    public void start(double intakeActivate){
+        if (intakeActivate > 0.9){
+            topIntakeMotor.set(0.5);
+            bottomIntakeMotor.set(0.5);
+        }
+        else if (intakeActivate < -0.9){
+            topIntakeMotor.set(-0.5);
+            bottomIntakeMotor.set(-0.5);   
         }
         else{
             topIntakeMotor.set(0);

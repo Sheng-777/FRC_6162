@@ -9,8 +9,8 @@ import frc.robot.subsystems.IntakerSubSystem;
 
 public class IntakeCommand extends CommandBase{
     private final IntakerSubSystem intakerSubsystem;
-    private final BooleanSupplier s;
-    public IntakeCommand(IntakerSubSystem aintakerSubSystem, BooleanSupplier activated){
+    private final DoubleSupplier s;
+    public IntakeCommand(IntakerSubSystem aintakerSubSystem, DoubleSupplier activated){
         intakerSubsystem = aintakerSubSystem;
         addRequirements(intakerSubsystem);
         s = activated;
@@ -18,7 +18,7 @@ public class IntakeCommand extends CommandBase{
 
     @Override
     public void execute(){
-        intakerSubsystem.start(s.getAsBoolean());
+        intakerSubsystem.start(s.getAsDouble());
     }
 
 }
