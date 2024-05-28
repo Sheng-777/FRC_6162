@@ -46,6 +46,7 @@ public class RobotContainer {
         double restTime = 0.55;
         double initialTime = 0.1;
         double spinTime = 0.23;
+        double stallTime = 8;
         double backwardTime = 2.3;
         double forwardTime = 1.62;
         double shootTime = 0.5;
@@ -57,32 +58,13 @@ public class RobotContainer {
       else if (Robot.autoTimer.get() < initialTime + spinTime){
         driveSubsystem.drive(0, 0, 0, 1);
       }
-      else if (Robot.autoTimer.get() < initialTime + spinTime + restTime){
+      else if (Robot.autoTimer.get() < initialTime + spinTime + restTime + stallTime){
         driveSubsystem.drive(0, 0, 0, 0);
       }
-
-      else if (Robot.autoTimer.get() < initialTime + spinTime + restTime + backwardTime){
-        System.out.println("GOING STRAIGHT");
-        driveSubsystem.drive(-0.35, 0, 0, 1);
-      }
-
-      else if (Robot.autoTimer.get() < initialTime + spinTime + restTime + backwardTime + restTime){
-        driveSubsystem.drive(0, 0, 0, 1);
+      else if (Robot.autoTimer.get() < initialTime + spinTime + restTime){
 
       }
-
-      else if (Robot.autoTimer.get() < initialTime + spinTime + restTime + backwardTime + restTime + forwardTime){
-        System.out.println("GOING STRAIGHT");
-        driveSubsystem.drive(0.35, 0, 0, 1);
-      }
-      else if (Robot.autoTimer.get() < initialTime + spinTime + restTime + backwardTime + restTime + forwardTime + restTime){
-        driveSubsystem.drive(0, 0, 0, 1);
-      }
-      else if (Robot.autoTimer.get()< initialTime + spinTime + restTime + backwardTime + restTime + forwardTime + restTime + shootTime){
-        System.out.println("SHOOTING");
-        shootSubSystem.shoot(-1, 0);
-      }
-      }
+    }
 
       public static void autoSpawnRight(){
         double restTime = 0.55;
@@ -134,30 +116,35 @@ public class RobotContainer {
         double spinTime = 0.4;
         double backwardTime = 2.3;
         double forwardTime = 1.2;
-        double forwardTwoTime = 0.7;
+        double forwardTwoTime = 1.6;
+        double stallTime = 7.8;
         double shootTime = 1.2;
         
         if (Robot.autoTimer.get() < initialTime){
             shootSubSystem.shoot(0, 0);
 
         }
-        else if (Robot.autoTimer.get() < initialTime + 0.8){
+        else if (Robot.autoTimer.get() < initialTime + stallTime){
+          shootSubSystem.shoot(0, 0);
+        }
+        else if (Robot.autoTimer.get() < initialTime + stallTime + 0.8){
           shootSubSystem.shoot(0,1);
         }
-        else if (Robot.autoTimer.get() < initialTime + 0.8 + shootTime){
+        else if (Robot.autoTimer.get() < initialTime + stallTime + 0.8 + shootTime){
             shootSubSystem.shoot(-1,0);
         }
-        else if (Robot.autoTimer.get() < initialTime + 0.8 + shootTime + 7){
-          shootSubSystem.shoot(0, 0);          
+        else if (Robot.autoTimer.get() < initialTime + stallTime + 0.8 + shootTime + restTime){
+          shootSubSystem.shoot(0, 0);
         }
-        else if (Robot.autoTimer.get() < initialTime + 0.8 + shootTime + 7 + backwardTime){
+        else if (Robot.autoTimer.get() < initialTime + stallTime + 0.8 + shootTime + restTime + backwardTime){
           driveSubsystem.drive(-0.5, 0, 0, 1);
         }
-        else if (Robot.autoTimer.get() < initialTime + 0.8 + shootTime + 7 + backwardTime + restTime){
+        else if (Robot.autoTimer.get() < initialTime + 0.8 + stallTime + shootTime + restTime + backwardTime  + restTime){
           driveSubsystem.drive(0,0,0,0);
         }
-        else if (Robot.autoTimer.get() < initialTime + 0.8 + shootTime + 7 + backwardTime + restTime + forwardTime){
-          driveSubsystem.drive(0, 0.5, 0, 1);
+        else if (Robot.autoTimer.get() < initialTime + 0.8 + stallTime + shootTime + restTime + backwardTime  + restTime + forwardTwoTime){
+          driveSubsystem.drive(0, -0.5, 0, 1);
+          //driveSubsystem.drive(0, -0.5, 0, 1);
         }
         else{
           shootSubSystem.shoot(0, 0);

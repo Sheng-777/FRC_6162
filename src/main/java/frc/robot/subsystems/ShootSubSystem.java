@@ -22,16 +22,17 @@ public class ShootSubSystem extends SubsystemBase{
             bottomShooter.set(speed);
         }
         else if (speed == 0){
-
-
             if (hold == 1){
                 topShooter.set(-1);
                 bottomShooter.set(0);
             }
 
             else{
-                topShooter.set(0);
-                bottomShooter.set(0);
+                if (topShooter.get() != 0 || bottomShooter.get() != 0){
+                    topShooter.set(0);
+                    bottomShooter.set(0);
+                }
+                
             }
         }
 
